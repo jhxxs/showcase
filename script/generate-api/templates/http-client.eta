@@ -1,0 +1,151 @@
+<%
+const { apiConfig, generateResponses, config } = it;
+%>
+
+import WXFormData from "@/service/utils/wxFormData"
+import { ENV_TYPE, getEnv } from "@tarojs/taro"
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, ResponseType } from "axios";
+import { isWx } from '@/constants'
+
+export type QueryParamsType = Record<string | number, any>;
+
+export interface FullRequestParams extends Omit<AxiosRequestConfig, "data" | "params" | "url" | "responseType"> {
+  /** set parameter to `true` for call `securityWorker` for this request */
+  secure?: boolean;
+  /** request path */
+  path: string;
+  /** content type of request body */
+  type?: ContentType;
+  /** query params */
+  query?: QueryParamsType;
+  /** format of response (i.e. response.json() -> format: "json") */
+  format?: ResponseType;
+  /** request body */
+  body?: unknown;
+}
+
+export type RequestParams = Omit<FullRequestParams, "body" | "method" | "query" | "path">;
+
+export interface ApiConfig<SecurityDataType = unknown> extends Omit<AxiosRequestConfig, "data" | "cancelToken"> {
+  securityWorker?: (securityData: SecurityDataType | null) => Promise<AxiosRequestConfig | void> | AxiosRequestConfig | void;
+  secure?: boolean;
+  format?: ResponseType;
+}
+
+export enum ContentType {
+  Json = "application/json",
+  FormData = "multipart/form-data",
+  UrlEncoded = "application/x-www-form-urlencoded",
+}
+
+export class HttpClient<SecurityDataType = unknown> {
+    public instance: AxiosInstance;
+    private securityData: SecurityDataType | null = null;
+    private securityWorker?: ApiConfig<SecurityDataType>["securityWorker"];
+    private secure?: boolean;
+    private format?: ResponseType;
+
+    constructor({ securityWorker, secure, format, ...axiosConfig }: ApiConfig<SecurityDataType> = {}) {
+        this.instance = axios.create({ ...axiosConfig, baseURL: axiosConfig.baseURL || "<%~ apiConfig.baseUrl %>" })
+        this.secure = secure;
+        this.format = format;
+        this.securityWorker = securityWorker;
+    }
+
+    public setSecurityData = (data: SecurityDataType | null) => {
+        this.securityData = data
+    }
+
+    private mergeRequestParams(params1: AxiosRequestConfig, params2?: AxiosRequestConfig): AxiosRequestConfig {
+        return {
+            ...this.instance.defaults,
+            ...params1,
+            ...(params2 || {}),
+            headers: {
+                ...(this.instance.defaults.headers || {}),
+                ...(params1.headers || {}),
+                ...((params2 && params2.headers) || {}),
+            },
+        };
+    }
+
+    private createFormData(input: Record<string, unknown>): FormData | WXFormData {
+      return Object.keys(input || {}).reduce(
+        (formData, key) => {
+          const property = input[key]
+          // 微信小程序环境使用formData上传时，如果key值是image或者file就使用WXFormData实例的appendFile方法
+          if(isWx && (key == 'file' || key == 'image')) {
+            // @ts-ignore
+            formData.appendFile(key, property)
+          }else {
+            formData.append(
+              key,
+              typeof property === "object" && property !== null
+                ? JSON.stringify(property)
+                : `${property}`
+            )
+          }
+          return formData
+        },
+        isWx ? new WXFormData() : new FormData()
+      )
+    }
+
+    public request = async <T = any, _E = any>({
+        secure,
+        path,
+        type,
+        query,
+        format,
+        body,
+        ...params
+<% if (config.unwrapResponseData) { %>
+    }: FullRequestParams): Promise<T> => {
+<% } else { %>
+    }: FullRequestParams): Promise<{
+      data: T extends any[] ? { list: T } : T,
+      code: number,
+      err_msg:string,
+      msg:string,
+      request_id:string
+    }> => {
+<% } %>
+        const secureParams = ((typeof secure === 'boolean' ? secure : this.secure) && this.securityWorker && (await this.securityWorker(this.securityData))) || {};
+        const requestParams = this.mergeRequestParams(params, secureParams);
+        const responseFormat = (format && this.format) || void 0;
+
+        let wxContentType = ''
+
+        if (type === ContentType.FormData && body && body !== null && typeof body === "object") {
+          requestParams.headers.common = { Accept: "*/*" };
+          requestParams.headers.post = {};
+          requestParams.headers.put = {};
+
+          const formData = this.createFormData(body as Record<string, unknown>);
+          if(isWx) {
+            // @ts-expect-error
+            const data = formData.getData()
+            body = data.buffer
+            wxContentType = data.contentType
+          }else{
+            body = formData
+          }
+        }
+
+        return this.instance.request({
+            ...requestParams,
+            headers: {
+                ...(type && type !== ContentType.FormData ? { "Content-Type": type } : {}),
+                ...(requestParams.headers || (type && type === ContentType.FormData && isWx) ? { "Content-Type": wxContentType } : {}),
+            },
+            params: query,
+            responseType: responseFormat,
+            data: body,
+            url: path,
+<% if (config.unwrapResponseData) { %>
+        }).then(response => response.data);
+<% } else { %>
+        });
+<% } %>
+    };
+}

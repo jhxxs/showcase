@@ -1,0 +1,31 @@
+/* 改变主题变量，具体变量名可查看 taro-ui/dist/style/variables/default.scss 文件 */
+// $color-brand: #e34c34;
+$color-brand: #fad000;
+$customPrefix: ".wc";
+/** 页面背景色 */
+$baseBg: #f6f6f6;
+$basePadding: 0 32px;
+/** 一级字体颜色 */
+$textFirst: #222;
+/** 二级字体颜色 */
+$textSeond: #646464;
+/** 三级字体颜色 */
+$textThird: #989aa3;
+/** 基本边框 */
+$borderBase: #e8e9ea;
+/* 灰背景色 */
+$grayBg: #f4f1f2;
+// 骨架屏背景
+$skeletonBg: #eee;
+$themeGreen: #9dccb9;
+$themeYellow: #ddff2b;
+
+/** 设置env() */
+@function cssEnv($direction, $declarationValue: 20px) {
+  @return env("safe-area-inset-#{$direction}", $declarationValue);
+}
+
+@mixin font-normal {
+  font-size: 28px;
+  line-height: 40px;
+}

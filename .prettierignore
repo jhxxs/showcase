@@ -1,0 +1,18 @@
+# Prettier Ignore folders
+dist
+.git
+.husky
+.linaria-cache
+# ingore html files
+index.html
+
+# 忽略脚本生成的iconfont文件夹
+src/components/Iconfont
+src/components/miniprogram
+
+# 忽略原生组件
+# src/components/miniprogram
+
+*.skeleton.wxml
+
+**/*.min.js

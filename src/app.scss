@@ -1,0 +1,179 @@
+page {
+  // background-color: #fafafa;
+  box-sizing: border-box;
+  font-size: 28px;
+  // font-family: SourceHanSansCN-Normal, SourceHanSansCN;
+  // taroify
+  --backdrop-background-color: rgba(0, 0, 0, 0.4);
+  --popup-animation-duration: 250ms;
+  --sheet-item-font-size: 28rpx;
+  --switch-checked-color: #{$color-brand};
+  --picker-toolbar-height: 112px;
+  --picker-confirm-action-color: #{$color-brand};
+  --cell-group-background-color: transparent;
+  --input-color: #{$textFirst};
+  --tag-large-border-radius: 6px;
+  --tag-default-color: #fff;
+  --tag-danger-color: #{$color-brand};
+  --cell-group-title-color: #{$textFirst};
+  --notice-bar-line-height: 80px;
+  --button-default-color: #{$textFirst};
+  --radio-checked-icon-background-color: #{$color-brand};
+  --radio-checked-icon-border-color: #{$color-brand};
+  --checkbox-checked-icon-background-color: #{$color-brand};
+  --checkbox-checked-icon-border-color: #{$color-brand};
+  --popup-rounded-border-radius: 48px;
+  // --button-primary-background-color: #{$themeGreen};
+  --button-primary-background-color: #{$color-brand};
+  --button-primary-color: #{$textFirst};
+  --button-font-size-medium: 32px;
+  // 修改css变量达到更改vantui默认样式 (don't remove)
+  --overlay-background-color: rgba(0, 0, 0, 0.4);
+  --popup-round-border-radius: 40px;
+  --button-border-radius: 12px;
+  --button-default-height: 80px;
+  --button-default-font-size: 28px;
+  --button-danger-border-color: #{$color-brand};
+  --button-danger-background-color: #{$color-brand};
+  --field-label-color: #{$textFirst};
+  --cell-line-height: 40px;
+  --cell-text-color: #{$textFirst};
+  --cell-vertical-padding: 36px;
+  --cell-group-inset-border-radius: 24px;
+  --field-placeholder-text-color: #{$textThird};
+  --dialog-border-radius: 20px;
+  --dialog-small-screen-width: 560px;
+  --tag-border-radius: 6px;
+  --action-sheet-item-font-size: 28px;
+  --action-sheet-item-line-heigh: 40px;
+  --action-sheet-description-color: #{$textThird};
+  --blender-bg: url(https://app-server-pro-1257124021.cos.ap-guangzhou.myqcloud.com/weapp/home_bg.jpg);
+}
+
+view {
+  box-sizing: border-box;
+}
+
+.taroify {
+  $t: &;
+  // 弹窗的遮罩层
+  &-backdrop {
+    // backdrop-filter: blur(5px);
+    background: rgba(0, 0, 0, 0.5);
+    // backdrop-filter: blur(50px);
+  }
+
+  &-popup {
+    &--bottom {
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+  }
+
+  &-sheet {
+    &__header {
+      padding-left: 15px !important;
+      padding-right: 15px !important;
+    }
+  }
+
+  &-picker {
+    $picker: &;
+    &__title {
+      color: $textFirst;
+    }
+  }
+
+  &-cell {
+    #{$t}-input__clear {
+      font-size: 32px;
+    }
+  }
+
+  &-tag {
+    &--default {
+      color: $textFirst !important;
+    }
+    &--danger {
+      box-shadow: 0px 2px 6px 0px rgba(227, 76, 52, 0.4);
+    }
+    &--large {
+      padding: 12px 40px !important;
+      margin: 0 32px 32px 0;
+      box-shadow: 0px 2px 6px 0px rgba(50, 54, 71, 0.2);
+    }
+  }
+
+  &-tabs {
+    $tab: &;
+    &.home-tabd {
+      background: red;
+      #{$tab}-sticky {
+        &--fixed {
+          background: var(--tabs-wrap-bg);
+        }
+      }
+
+      #{$tab} {
+        > view {
+          border-radius: 40px 40px 0 0 !important;
+        }
+        &__tab {
+          flex: initial;
+          padding: 0 16px;
+          display: flex;
+          flex-basis: initial !important;
+          align-items: center;
+          width: 118px !important;
+          box-sizing: border-box;
+
+          &__content {
+            transition: all 100ms linear;
+            /* transform-origin: center center; */
+            display: inline;
+            font-size: 28px;
+            margin-top: 7px;
+          }
+          &--active {
+            .taroify-tabs__tab__content {
+              font-size: 40px;
+              margin-top: 0px;
+              /* transform: scale(1.25); */
+            }
+          }
+          &--disabled {
+            flex: 1;
+            display: flex;
+            justify-content: right;
+            flex-direction: row-reverse;
+            .taroify-tabs__tab__content {
+              height: 100%;
+              margin-top: 0;
+            }
+          }
+        }
+        /* 隐藏指示红线 */
+        &__line {
+          display: none;
+        }
+        &__nav {
+          padding: 0 16px;
+          &--line {
+            padding-bottom: 0;
+          }
+        }
+        &__wrap {
+          height: 112px;
+          border-radius: 40px 40px 0 0 !important;
+          background: $baseBg;
+          &__scroll {
+            &--line {
+              border-radius: 40px 40px 0 0 !important;
+              box-sizing: border-box;
+              z-index: 98;
+            }
+          }
+        }
+      }
+    }
+  }
+}

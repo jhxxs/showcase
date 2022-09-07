@@ -1,0 +1,75 @@
+{
+  "i18n-ally.localesPaths": ["src/i18n"],
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.enabledFrameworks": ["react", "i18next"],
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "minapp-vscode.wxmlFormatter": "prettier",
+  "minapp-vscode.prettier": {
+    //prettier 更多参考https://prettier.io/docs/en/options.html
+    "useTabs": false,
+    "tabWidth": 2,
+    "printWidth": 100,
+    "singleQuote": false
+  },
+  "smartClicks.rules": {
+    "dash": true,
+    "html-element": true,
+    "js-arrow-fn": true
+  },
+  "fileheader.customMade": {
+    "Date": "Do not edit", // 文件创建时间(不变)
+    "LastEditors": "Kyle", // 文件最后编辑者
+    "LastEditTime": "Do not edit", // 文件最后编辑时间
+    "FilePath": "Do not edit" // 文件在项目中的相对路径 自动更新
+  },
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/*/**": true,
+    "**/.hg/store/**": true,
+    "**/script/*/**": true
+  },
+  "windicss.enableCodeCompletion": false,
+  "windicss.enableUtilityCompletion": false,
+  "stylelint.enable": true,
+  "stylelint.validate": [
+    "css",
+    "html",
+    // "javascript",
+    // "javascriptreact",
+    "less",
+    // "postcss",
+    "sass",
+    "scss",
+    "source.css.styled",
+    "styled-css"
+    // "typescript"
+    // "typescriptreact",
+  ],
+  "commit-message-editor.view.defaultView": "form",
+  // updated 2022-03-08 02:48
+  // https://github.com/antfu/vscode-file-nesting-config
+  "explorer.experimental.fileNesting.enabled": true,
+  "explorer.experimental.fileNesting.expand": false,
+  "explorer.experimental.fileNesting.patterns": {
+    ".gitignore": ".gitattributes",
+    // "*.js": "$(capture).js.map, $(capture).min.js, $(capture).d.ts",
+    // "*.jsx": "$(capture).js",
+    // "*.ts": "$(capture).js, $(capture).*.ts",
+    "*.tsx": "$(capture).ts",
+    "index.d.ts": "*.d.ts",
+    "shims.d.ts": "*.d.ts",
+    ".env": "*.env, .env-*, env.d.ts",
+    "tsconfig.json": "tsconfig.*.json",
+    "webpack.config.js": "webpack.config.*",
+    "rollup.config.*": "api-extractor.json",
+    "package.json": ".browserslist*, .circleci*, .editorconfig, .eslint*, .gitlab-*, .gitlab-*.yml, .gitpod*, .markdownlint*, .node-version, .nodemon*, .npm*, .nvmrc, .prettier*, .releaserc*, .sentry*, .stackblitz, .stylelint*, .tazerc*, .travis.yml, .vscode*, .watchman*, .yamllint*, .yarnrc*, api-extractor*, babel.config.*, build.config.*, commitlint.config, cypress.json, gulp.*, jsconfig.*, lerna*, lint-staged.config, netlify.toml, package-lock.json, pnpm-*, renovate.*, rollup.config.*, stylelint.config.*, svgo.config.*, tsconfig.*, tsup.config.*, turbo.json, vercel.*, vetur.config.*, yarn-*, project.*, .release-it.*, linaria.*, iconfont.*, jest.*",
+    "readme.md": "authors, backers.md, changelog.md, code_of_conduct.md, codeowners, contributing.md, license, security.md, sponsors.md",
+    "vite.config.*": ".env*, $babel.config.*, jest.config.*, postcss.config.*, svgo.config.*, tailwind.config.*, unocss.config.*, vitest.config.*, webpack.config.*, windi.config.*",
+    "vue.config.*": ".env*, babel.config.*, jest.config.*, postcss.config.*, svgo.config.*, tailwind.config.*, unocss.config.*, vitest.config.*, webpack.config.*, windi.config.*",
+    "nuxt.config.*": ".env*, babel.config.*, jest.config.*, postcss.config.*, svgo.config.*, tailwind.config.*, unocss.config.*, vitest.config.*, webpack.config.*, windi.config.*",
+    "next.config.*": ".env*, babel.config.*, jest.config.*, postcss.config.*, svgo.config.*, tailwind.config.*, unocss.config.*, vitest.config.*, webpack.config.*, windi.config.*",
+    "svelte.config.*": ".env*, babel.config.*, jest.config.*, postcss.config.*, svgo.config.*, tailwind.config.*, unocss.config.*, vitest.config.*, webpack.config.*, windi.config.*",
+    "remix.config.*": "remix.*, .env*, babel.config.*, jest.config.*, postcss.config.*, svgo.config.*, tailwind.config.*, unocss.config.*, vitest.config.*, webpack.config.*, windi.config.*"
+  }
+}

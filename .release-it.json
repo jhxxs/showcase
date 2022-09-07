@@ -1,0 +1,69 @@
+{
+  "git": {
+    "push": true,
+    "requireCleanWorkingDir": true,
+    "commit": true
+  },
+  "npm": {
+    "publish": false
+  },
+  "github": {
+    "release": false
+  },
+  "hooks": {
+    "after:release": "yarn build:weapp:pro"
+  },
+  "plugins": {
+    "@release-it/conventional-changelog": {
+      "preset": {
+        "name": "conventionalcommits",
+        "types": [
+          {
+            "type": "feat",
+            "section": "Features"
+          },
+          {
+            "type": "fix",
+            "section": "Bug Fixes"
+          },
+          {
+            "type": "refactor",
+            "section": "不影响的修改：",
+            "hidden": true
+          },
+          {
+            "type": "build",
+            "section": "构建系统或外部依赖项的更改：",
+            "hidden": true
+          },
+          {
+            "type": "ci",
+            "section": "配置文件和脚本的更改：",
+            "hidden": true
+          },
+          {
+            "type": "docs",
+            "section": "文档更新：",
+            "hidden": true
+          },
+          {
+            "type": "style",
+            "section": "代码优化（不影响功能特性）："
+          },
+          {
+            "type": "test",
+            "section": "新增测试代码：",
+            "hidden": true
+          },
+          {
+            "type": "update",
+            "section": "Updates (unconventional type)",
+            "hidden": true
+          }
+        ]
+      },
+      "infile": "CHANGELOG.md",
+      "ignoreRecommendedBump": true
+    }
+  }
+}
